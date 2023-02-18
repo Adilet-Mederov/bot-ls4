@@ -3,6 +3,8 @@ from aiogram.utils import executor #для запуска бота
 import logging
 import decouple
 from decouple import config
+from aiogram.types import InlineKeyboardButton,InlineKeyboardMarkup
+
 
 TOKEN=config('TOKEN')
 
@@ -14,6 +16,46 @@ async def start_handler(massage:types.message):
     await massage.answer('HELLO!')
     await bot.send_message(massage.from_user.id,f'{massage.from_user.first_name}')
     await massage.answer('Пока что всё!')
+
+#Опросник\Викторина
+@db.message_handler(commands=['quiz'])
+async def quiz1(massage:types.Message):
+    markup=InlineKeyboardMarkup()
+    button=InlineKeyboardButton('Next',callback_data='button')
+    ques = 'Кто ты воин?'
+    answer =[
+        'Бетмен',
+        'Томас Шелби',
+        'Спанч боб',
+        'Ахилес! Сыен пелея '
+    ]
+
+    await bot.send_poll(
+        chat_id=massage.from_user.id,
+        question=ques,
+        options=answer,
+        is_anonymous=False,
+        type='quiz',
+        correct_option_id=3,
+        open_period=2*5
+    )
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 @db.message_handler()
 async def echo(massege:types.Message):
