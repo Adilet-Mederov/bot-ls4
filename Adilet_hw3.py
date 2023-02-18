@@ -13,8 +13,10 @@ db = Dispatcher(bot=bot)
 
 @db.message_handler(commands=['start' , 'hello'])
 async def start_handler(massage:types.message):
-    await massage.answer('HELLO!')
-    await bot.send_message(massage.from_user.id,f'{massage.from_user.first_name}')
+    await massage.answer('Hello!')
+    await bot.send_message(massage.from_user.id,f'{massage.from_user.first_name}\n'
+                                                f'Для активации викторины---> /quiz')
+
     # await massage.answer('Пока что всё!')
 
 
@@ -32,8 +34,7 @@ async def quiz1(massage: types.CallbackQuery):
         'Скуби-Ду!',
         'Не знаю!'
     ]
-
-
+    photo = open(media/) 
 
     await bot.send_poll(
         chat_id=massage.from_user.id,
@@ -49,7 +50,7 @@ async def quiz1(massage: types.CallbackQuery):
 
 
 @db.callback_query_handler(text='button')
-async def quiz2(call: types.CallbackQuery):
+async def quiz2(call:types.CallbackQuery):
     ques = 'Как зовут этого персонажа?'
     answer = [
         'Мэтр',
@@ -58,9 +59,8 @@ async def quiz2(call: types.CallbackQuery):
         'Маша',
         'Не знаю!'
     ]
-
-
-
+    # photo = open('')
+    # await bot.send_photo(call.from_user.id, photo=photo)
     await bot.send_poll(
         chat_id=call.from_user.id,
         question=ques,
